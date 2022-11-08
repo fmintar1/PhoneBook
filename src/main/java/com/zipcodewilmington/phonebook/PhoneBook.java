@@ -20,6 +20,7 @@ public class PhoneBook {
 
     public void add(String name, String phoneNumber) {
         phonebook.put(name, new ArrayList<String>());
+        phonebook.get(name).add(phoneNumber);
     }
 
     public void addAll(String name, String... phoneNumbers) {
@@ -27,14 +28,15 @@ public class PhoneBook {
     }
 
     public void remove(String name) {
+        phonebook.remove(name);
     }
 
     public Boolean hasEntry(String name) {
-        return null;
+        return phonebook.containsKey(name);
     }
 
     public Boolean hasEntry(String name, String phoneNumber) {
-        return null;
+        return phonebook.containsKey(name) && phonebook.get(name).contains(phoneNumber);
     }
 
     public List<String> lookup(String name) {
@@ -42,12 +44,17 @@ public class PhoneBook {
     }
 
     public String reverseLookup(String phoneNumber)  {
-        return null;
+        String result = "";
+        for( String key : phonebook.keySet()) {
+            if(phonebook.get(key).contains(phoneNumber)) {
+                result = key;
+            }
+        }
+        return result;
     }
 
     public List<String> getAllContactNames() {
-        Set<String> keys = getMap().keySet();
-        return new ArrayList<>(keys);
+        return new ArrayList<>(phonebook.keySet());
     }
 
     public Map<String, List<String>> getMap() {
